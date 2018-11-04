@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rock Paper Scissors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    
+</head>
+<body>   
+<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDRs9Ce1qs38FTQOUdUzi7uUaGwtQ-6U7k",
+    authDomain: "rock-paper-scissors-2c93c.firebaseapp.com",
+    databaseURL: "https://rock-paper-scissors-2c93c.firebaseio.com",
+    projectId: "rock-paper-scissors-2c93c",
+    storageBucket: "rock-paper-scissors-2c93c.appspot.com",
+    messagingSenderId: "133963065754"
+  };
+  firebase.initializeApp(config);
+</script>
+  <h5><span id="hasOpponent"> You have no challenger!</span>
+  </h5>
+  <button id="check">I'm ready!</button> <br>
+  <button id="paper"> Paper </button>
+  <button id="rock"> Rock </button>
+  <button id="scissors"> Scissors </button> <br>
+  <h3><span id="win/loss"></span></h3> <br>
+  <b>Wins: </b> <span id="wins"> 0 </span> <br>
+  <b>Losses: </b> <span id="losses"> 0 </span> <br>
+  <b>Ties: </b> <span id="ties"> 0 </span> <br>
+    
+  <!-- <script src="assets/javascript/logic.js"></script> -->
+  <script src="assets/javascript/logic2.js"></script>
+
+</body>
+</html>
