@@ -16,12 +16,13 @@ $(document).ready(function () {
     var opponentID;
     var wins = 0;
     var losses = 0;
+    var ties=0;
     //onload we check if there's a player looking for a game
     //this should only run at the begining of the game
     database.ref().once("value", function (snapshot) {
         //the firebase is empty then we set ourselves as 
         //a new player
-        
+
         if (snapshot.val() == null) {
             playerID = 'player1';
             opponentID = 'player2';
@@ -57,33 +58,35 @@ $(document).ready(function () {
     $("#scissors").on("click", function () { throwUpdater('s') })
     //the logic that runs when we press a button
     throwUpdater = function (chosenThrow) {
-        
+
         database.ref(playerID).child('throw').set(chosenThrow)
         //we check if our oppotent has made their choice
         var opponentThrow;
-        database.ref(opponentID).once('value',function(snapshot){
-            opponentThrow=snapshot.val().throw
+        database.ref(opponentID).once('value', function (snapshot) {
+            opponentThrow = snapshot.val().throw
+            console.log("in database ref:" + opponentThrow)
+        }).then(function () {
+            console.log("out of the ref " + opponentThrow)
+            console.log("logic: " + !(opponentThrow == 'empty'))
+            if (!(opponentThrow == 'empty')) {
+                console.log('here!' + opponentThrow)
+                gameEvaluator(chosenThrow, opponentThrow)
+            }
         })
-        console.log(opponentThrow)
-        console.log("logic: "+ !(opponentThrow == 'empty'))
-        if (!(opponentThrow == 'empty')) {
-            console.log('here!'+opponentThrow)
-            gameEvaluator(chosenThrow, opponentThrow)
-        }
+
     }
     //the game evalutor function takes in our throw and our opptents 
     //and updates our wins and losses
     //and resets our throw
     gameEvaluator = function (myThrow, opponentThrow) {
-        console.log('gameeval: '+myThrow+ opponentThrow)
-        if ( (myThrow == 'r' && opponentThrow == 'p') || (myThrow == 'p' && opponentThrow == 's') || (myThrow == 's' && opponentThrow == 'r')) {
+        console.log('gameeval: ' + myThrow + opponentThrow)
+        if ((myThrow == 'r' && opponentThrow == 'p') || (myThrow == 'p' && opponentThrow == 's') || (myThrow == 's' && opponentThrow == 'r')) {
             lose()
         }
-        else if ( (myThrow == 'p' && opponentThrow == 'r') || (myThrow == 's' && opponentThrow == 'p') || (myThrow == 'r' && opponentThrow == 's'))
-        {
+        else if ((myThrow == 'p' && opponentThrow == 'r') || (myThrow == 's' && opponentThrow == 'p') || (myThrow == 'r' && opponentThrow == 's')) {
             win()
         }
-        else if (myThrow==opponentThrow){
+        else if (myThrow == opponentThrow) {
             tie()
         }
     }
@@ -97,7 +100,7 @@ $(document).ready(function () {
         $("#losses").text(losses)
         database.ref(playerID).child('throw').set('empty')
     }
-    tie =function (){
+    tie = function () {
         ties++;
         $("#ties").text(ties)
         database.ref(playerID).child('throw').set('empty')
